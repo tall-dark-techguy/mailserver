@@ -49,7 +49,7 @@ app.post("/api/mail", async (req, res) => {
       );
     });
 
-    res.json({ status: "success", message: "Mails sent!", recipients });
+    res.send('success');
   } catch (error) {
     res.status(500).json(error.message);
   }
