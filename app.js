@@ -37,17 +37,15 @@ app.post("/api/mail", async (req, res) => {
   const { sender, recipients, subject, message } = req.body;
 
   try {
-    recipients.forEach(async (rcp) => {
-      await sendMail(
+    await sendMail(
         {
           from: sender,
-          to: rcp,
+          to: recipients,
           subject,
           html: message,
         },
         req.transporter
       );
-    });
 
     res.send('success');
   } catch (error) {
