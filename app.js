@@ -37,17 +37,19 @@ app.post("/api/mail", async (req, res) => {
   const { sender, recipients, subject, message } = req.body;
 
   try {
-    await sendMail(
+    recipients.forEach(async (rcp) => {
+      await sendMail(
         {
           from: sender,
-          to: recipients,
+          to: rcp,
           subject,
           html: message,
         },
         req.transporter
       );
+    });
 
-    res.send('success');
+    res.json({ status: "success", message: "Mails sent!", recipients });
   } catch (error) {
     res.status(500).json(error.message);
   }
